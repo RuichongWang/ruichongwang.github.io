@@ -13,6 +13,6 @@ jobs:
       - name: Validate skill frontmatter
         run: ./validate.sh
       - name: Shell syntax check
-        run: bash -n install.sh adopt.sh validate.sh
+        run: bash -n install.sh adopt.sh validate.sh publish.sh sync-public.sh
       - name: Install into a scratch dir
         run: ./install.sh --dir "$RUNNER_TEMP/skills" && ls -l "$RUNNER_TEMP/skills"

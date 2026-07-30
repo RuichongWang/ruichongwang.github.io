@@ -54,10 +54,36 @@ echo
 echo "patrol"
 
 # --- single source of truth: no path list duplicated between docs and script
+#
+# 2026-07-30: the first version of this grepped for the literal string
+# "Mirrored: `skills/", which was the exact wording of the violation it was
+# written for. That wording was then fixed, so the check could never fire
+# again — it passed forever and looked healthy doing it. Bind on the shape of
+# the violation instead, and derive the path list from the script rather than
+# restating it here, since restating it is the thing being checked for.
 
-if grep -q 'Mirrored: `skills/' "$REPO_ROOT/CLAUDE.md" 2>/dev/null; then
-  note "CLAUDE.md re-enumerates PUBLIC_PATHS — point at sync-public.sh instead"
-fi
+# Count per LINE, not per file. Re-enumerating the list puts several entries
+# on one line; legitimately mentioning skills/ in one rule and docs/ in another
+# puts one on each. A whole-file count cannot tell those apart and false-alarms
+# on the second — and an alarm that fires on correct docs gets learned around,
+# which is worse than not checking.
+
+mirrored="$(sed -n '/^PUBLIC_PATHS=(/,/^)/p' "$REPO_ROOT/sync-public.sh" |
+            sed -n 's/^[[:space:]]*\([A-Za-z.][A-Za-z0-9._-]*\)[[:space:]]*$/\1/p')"
+
+worst=0
+while IFS= read -r line; do
+  case "$line" in *'`'*) ;; *) continue ;; esac
+  n=0
+  while read -r entry; do
+    [ -z "$entry" ] && continue
+    case "$line" in *"$entry"*) n=$((n + 1)) ;; esac
+  done <<< "$mirrored"
+  [ "$n" -gt "$worst" ] && worst=$n
+done < "$REPO_ROOT/CLAUDE.md"
+
+[ "$worst" -ge 3 ] &&
+  note "CLAUDE.md lists $worst of PUBLIC_PATHS' entries on one line — point at sync-public.sh instead"
 
 # --- the memory store must never be publishable
 

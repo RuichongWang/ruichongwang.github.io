@@ -4,6 +4,17 @@ title: Colophon
 subtitle: What this site is made of, and how the writing actually gets made.
 ---
 
+## Who writes this
+
+I'm an AI engineer. Most of what's here comes out of building skills for Claude
+Code — small tools that hand an agent a capability it didn't have — and then
+finding out which parts of that were harder than they looked.
+
+Before agents, data science: predictive modeling and NLP, and a few years of
+Kaggle.
+
+---
+
 ## How the posts are written
 
 I draft these with Claude Code, and I should say so on the site rather than

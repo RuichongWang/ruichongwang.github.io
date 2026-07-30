@@ -1,0 +1,455 @@
+/* ------------------------------------------------------------------ tokens */
+
+:root {
+  --bg:       #fcfcfb;
+  --raised:   #f2f5f5;
+  --text:     #14181a;
+  --muted:    #596265;
+  --faint:    #8a9294;
+  --rule:     #e2e6e6;
+  --accent:   #0f5f6c;
+  --code-bg:  #eef2f3;
+  --quote-bg: #f2f7f7;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:       #0e1215;
+    --raised:   #161d20;
+    --text:     #e7eae9;
+    --muted:    #98a1a3;
+    --faint:    #737c7e;
+    --rule:     #222a2d;
+    --accent:   #5ec3d0;
+    --code-bg:  #171f22;
+    --quote-bg: #141c1f;
+  }
+}
+
+:root[data-theme="dark"] {
+  --bg:       #0e1215;
+  --raised:   #161d20;
+  --text:     #e7eae9;
+  --muted:    #98a1a3;
+  --faint:    #737c7e;
+  --rule:     #222a2d;
+  --accent:   #5ec3d0;
+  --code-bg:  #171f22;
+  --quote-bg: #141c1f;
+}
+
+:root[data-theme="light"] {
+  --bg:       #fcfcfb;
+  --raised:   #f2f5f5;
+  --text:     #14181a;
+  --muted:    #596265;
+  --faint:    #8a9294;
+  --rule:     #e2e6e6;
+  --accent:   #0f5f6c;
+  --code-bg:  #eef2f3;
+  --quote-bg: #f2f7f7;
+}
+
+:root {
+  --serif: ui-serif, Charter, "Bitstream Charter", Georgia, "Songti SC",
+           "Noto Serif CJK SC", serif;
+  --mono:  ui-monospace, SFMono-Regular, "SF Mono", Menlo, "DejaVu Sans Mono",
+           monospace;
+}
+
+/* ------------------------------------------------------------------- base */
+
+*, *::before, *::after { box-sizing: border-box; }
+
+/* The measure is set in rem and the root scales with the viewport, so the line
+   stays ~68 characters everywhere and the whole page grows on a large display
+   instead of sitting at a fixed 624px in the middle of it. Media-query rem
+   always resolves against the initial 16px, so the breakpoints below don't
+   move when this does. */
+html {
+  -webkit-text-size-adjust: 100%;
+  font-size: clamp(16px, 14.6px + 0.22vw, 18.5px);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--serif);
+  font-size: 1.16rem;
+  line-height: 1.66;
+}
+
+.wrap { max-width: 39rem; margin: 0 auto; padding: 0 1.4rem 4rem; }
+
+a { color: var(--accent); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+a:hover { text-decoration-thickness: 2px; }
+a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
+
+.meta, .eyebrow, .cta, .site-foot, .section-label, .back, .post-body h2 {
+  font-family: var(--mono);
+}
+
+.meta {
+  display: block;
+  font-size: .71rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  font-variant-numeric: tabular-nums;
+}
+
+/* -------------------------------------------------------------------- rail
+
+   Stacked above the content by default; becomes a sticky sidebar at 64rem.
+   Two variants: the home page carries the full masthead, every other page a
+   compact identity strip. */
+
+.rail { padding: 3.4rem 0 0; }
+
+.eyebrow {
+  margin: 0;
+  font-size: .71rem;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.rail-name {
+  display: block;
+  margin: .85rem 0 0;
+  font-size: 3rem;
+  line-height: 1.02;
+  font-weight: 600;
+  letter-spacing: -.032em;
+  color: var(--text);
+  text-decoration: none;
+  text-wrap: balance;
+}
+
+.bio {
+  margin: 1.1rem 0 0;
+  max-width: 27rem;
+  font-size: 1.06rem;
+  line-height: 1.55;
+  color: var(--muted);
+}
+
+.rail-tag { margin: .35rem 0 0; color: var(--faint); }
+
+.rail-links { display: flex; gap: 1.4rem; margin-top: 1.4rem; }
+.rail-links a {
+  font-family: var(--mono);
+  font-size: .72rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+}
+
+/* compact: a single horizontal strip on narrow screens, like a nav bar */
+.rail--compact {
+  display: flex;
+  align-items: center;
+  gap: .9rem;
+  padding: 1.6rem 0;
+  margin-bottom: 1.4rem;
+  border-bottom: 1px solid var(--rule);
+}
+.rail--compact .rail-name {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: .72rem;
+  font-weight: 600;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+.rail--compact .rail-name:hover { color: var(--accent); }
+.rail--compact .rail-tag { display: none; }
+.rail--compact .rail-links { margin: 0 0 0 auto; gap: 1.1rem; }
+
+/* Two columns once there is room for identity beside the text instead of above
+   it. The text column keeps its measure — only the frame gets wider, so the
+   page reads as a site on a large display rather than a centred strip. */
+@media (min-width: 64rem) {
+  .wrap {
+    max-width: 58rem;
+    display: grid;
+    grid-template-columns: 13.5rem minmax(0, 39rem);
+    gap: 0 4rem;
+    align-items: start;
+  }
+
+  .rail, .rail--compact {
+    display: block;
+    position: sticky;
+    top: 3.2rem;
+    padding: 3.2rem 0 0;
+    margin: 0;
+    border-bottom: 0;
+  }
+  .rail-name { font-size: 1.75rem; }
+  .rail--compact .rail-name {
+    font-family: var(--serif);
+    font-size: 1.35rem;
+    font-weight: 600;
+    letter-spacing: -.02em;
+    text-transform: none;
+    white-space: normal;
+  }
+  .rail--compact .rail-tag { display: block; font-size: .93rem; line-height: 1.45; }
+  .bio { font-size: .97rem; }
+  .rail-links, .rail--compact .rail-links {
+    display: block;
+    margin: 1.5rem 0 0;
+  }
+  .rail-links a { display: block; margin-bottom: .55rem; }
+
+  .col { min-width: 0; padding-top: 3.2rem; }
+}
+
+/* -------------------------------------------------------------- lead entry */
+
+.lead {
+  margin-top: 3.4rem;
+  padding: 1.9rem 1.8rem 2rem;
+  background: var(--raised);
+  border-left: 3px solid var(--accent);
+}
+
+.lead-title {
+  margin: .6rem 0 0;
+  font-size: 1.85rem;
+  line-height: 1.16;
+  font-weight: 600;
+  letter-spacing: -.018em;
+  text-wrap: balance;
+}
+.lead-title a { color: var(--text); text-decoration: none; }
+.lead-title a:hover { color: var(--accent); }
+
+.lead .dek {
+  margin: .85rem 0 0;
+  color: var(--muted);
+  font-size: 1.02rem;
+  line-height: 1.55;
+}
+
+.cta {
+  display: inline-block;
+  margin-top: 1.5rem;
+  font-size: .72rem;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+  text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: .22rem;
+}
+.cta::after { content: " →"; }
+.cta:hover { border-bottom-width: 2px; }
+
+/* -------------------------------------------------------------- older list */
+
+.section-label {
+  margin: 3.6rem 0 0;
+  padding-bottom: .7rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: .71rem;
+  font-weight: 600;
+  letter-spacing: .17em;
+  text-transform: uppercase;
+  color: var(--faint);
+}
+
+.post-list { margin: 0; padding: 0; list-style: none; }
+.post-list li { padding: 1.7rem 0; border-bottom: 1px solid var(--rule); }
+
+.post-list h3 {
+  margin: .4rem 0 0;
+  font-size: 1.24rem;
+  line-height: 1.28;
+  font-weight: 600;
+  letter-spacing: -.008em;
+}
+.post-list h3 a { color: var(--text); text-decoration: none; }
+.post-list h3 a:hover { color: var(--accent); }
+.post-list .dek { margin: .4rem 0 0; color: var(--muted); font-size: .96rem; line-height: 1.5; }
+
+.empty { margin-top: 3rem; color: var(--faint); }
+
+/* -------------------------------------------------------------------- post */
+
+.post-head { padding: 2.4rem 0 0; }
+
+.post-head h1 {
+  margin: .8rem 0 0;
+  font-size: 2.2rem;
+  line-height: 1.14;
+  font-weight: 600;
+  letter-spacing: -.02em;
+  text-wrap: balance;
+}
+
+.post-head .dek {
+  margin: 1rem 0 0;
+  font-size: 1.1rem;
+  line-height: 1.5;
+  color: var(--muted);
+  font-style: italic;
+}
+
+.post-body { margin-top: 2.4rem; }
+.post-body p { margin: 0 0 1.3rem; }
+.post-body strong { font-weight: 700; }
+
+.post-body h2 {
+  margin: 2.4rem 0 1.1rem;
+  font-size: .75rem;
+  font-weight: 700;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+/* The author separates every section. Make the separator the rhythm. */
+.post-body hr {
+  border: 0;
+  height: 2px;
+  width: 2.6rem;
+  background: var(--accent);
+  opacity: .5;
+  margin: 2.9rem 0 0;
+}
+
+.post-body blockquote {
+  margin: 1.7rem 0;
+  padding: 1.05rem 1.2rem;
+  background: var(--quote-bg);
+  border-left: 2px solid var(--accent);
+  font-size: .95rem;
+  line-height: 1.62;
+}
+.post-body blockquote p { margin: 0 0 .55rem; }
+.post-body blockquote p:last-child { margin: 0; }
+
+code, pre { font-family: var(--mono); }
+
+.post-body code {
+  background: var(--code-bg);
+  padding: .12em .38em;
+  border-radius: 3px;
+  font-size: .82em;
+}
+
+.post-body pre {
+  background: var(--code-bg);
+  padding: 1rem 1.15rem;
+  border-radius: 4px;
+  overflow-x: auto;
+  font-size: .84rem;
+  line-height: 1.55;
+}
+.post-body pre code { background: none; padding: 0; font-size: inherit; }
+
+.post-body table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .91rem;
+  font-variant-numeric: tabular-nums;
+  margin: 1.6rem 0;
+}
+.post-body th, .post-body td {
+  text-align: left;
+  padding: .55rem .7rem;
+  border-bottom: 1px solid var(--rule);
+}
+.post-body th { font-weight: 600; }
+.post-body img { max-width: 100%; height: auto; }
+
+/* ------------------------------------------------------------------ figures
+
+   Figures are inlined as SVG (see _includes/figure.html), so the tokens above
+   reach inside them and the manual [data-theme] toggle works. Type inside an
+   SVG scales with the viewBox, so the figure scrolls below --fig-min rather
+   than shrinking its own labels into illegibility. */
+
+.post-body .fig {
+  margin: 2.4rem 0;
+  overflow-x: auto;
+}
+.post-body .fig-svg {
+  display: block;
+  width: 100%;
+  min-width: 33rem;
+  height: auto;
+}
+.post-body .fig figcaption {
+  margin-top: .9rem;
+  font-size: .79rem;
+  line-height: 1.55;
+  color: var(--faint);
+}
+
+/* These upgrade the SVG's own presentation attributes, which already render it
+   legibly on their own. Never move a colour here that isn't also in the file —
+   a stale stylesheet then renders the figure black-on-black. Labels are
+   uppercased in the SVG source: Safari ignores text-transform on SVG text. */
+
+.fig-lane  { fill: var(--accent); font-size: 12px; font-weight: 700; letter-spacing: .15em; }
+.fig-node  { fill: var(--text);  font-family: var(--serif); font-size: 14.5px; font-weight: 600; }
+.fig-note  { fill: var(--muted); fill-opacity: 1; font-family: var(--serif); font-size: 12.5px; }
+.fig-clock { fill: var(--faint); fill-opacity: 1; font-family: var(--mono); font-size: 11px; }
+.fig-annot { fill: var(--faint); fill-opacity: 1; font-size: 10.5px; letter-spacing: .12em; }
+
+.fig-track  { stroke: var(--rule); stroke-opacity: 1; stroke-width: 2; }
+.fig-dot    { fill: var(--accent); }
+.fig-window { fill: var(--accent); fill-opacity: .07; }
+.fig-edge   { stroke: var(--accent); stroke-opacity: .55; stroke-width: 1.5; stroke-dasharray: 3 4; }
+
+.back {
+  display: inline-block;
+  margin-top: 3rem;
+  font-size: .72rem;
+  letter-spacing: .11em;
+  text-transform: uppercase;
+}
+
+/* ------------------------------------------------------------------ footer */
+
+.site-foot {
+  margin-top: 4rem;
+  padding-top: 1.6rem;
+  border-top: 1px solid var(--rule);
+  font-size: .71rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--faint);
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+}
+.foot-note { margin-left: auto; }
+
+/* ------------------------------------------------------------------ mobile */
+
+@media (max-width: 34rem) {
+  body { font-size: 1.09rem; }
+  .wrap { padding: 0 1.15rem 3rem; }
+  .rail { padding-top: 2.6rem; }
+  .rail-name { font-size: 2.25rem; }
+  .rail--compact { padding: 1.3rem 0; }
+  .rail--compact .rail-name { font-size: .7rem; }
+  .bio { font-size: 1rem; }
+  .lead { padding: 1.5rem 1.3rem 1.6rem; margin-top: 2.6rem; }
+  .lead-title { font-size: 1.5rem; }
+  .post-head h1 { font-size: 1.72rem; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { animation: none !important; transition: none !important; }
+}
+
+/* ---------------------------------------------------------------- comments */
+
+.comments { margin-top: 3.6rem; }
+.comments .section-label { margin-top: 0; margin-bottom: 1.4rem; }
+.comments .giscus, .comments iframe { max-width: 100%; }

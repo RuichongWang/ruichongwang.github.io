@@ -1,0 +1,20 @@
+{%- comment -%}
+  Inline an SVG figure from _includes/figures/ so the site's CSS custom
+  properties reach inside it. An <img> would not: the theme has a manual
+  [data-theme] override, and a referenced SVG can only see prefers-color-scheme.
+
+  Usage, from a draft in writing/ or a post in _posts/:
+
+    {% raw %}{% include figure.html src="answer-twice-timeline.svg"
+                           alt="One sentence, for a screen reader"
+                           caption="What is plotted. Not the verdict." %}{% endraw %}
+
+  Keep the example inside this comment tag. In an HTML comment Liquid still
+  parses it, and figure.html would include itself until the stack blew.
+{%- endcomment -%}
+<figure class="fig" role="img" aria-label="{{ include.alt }}">
+  {% include figures/{{ include.src }} %}
+  {%- if include.caption %}
+  <figcaption>{{ include.caption }}</figcaption>
+  {%- endif %}
+</figure>

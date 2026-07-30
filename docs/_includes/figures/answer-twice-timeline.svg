@@ -1,0 +1,44 @@
+<svg viewBox="0 0 640 250" width="100%" xmlns="http://www.w3.org/2000/svg" class="fig-svg" focusable="false"
+     fill="currentColor" font-family="Georgia, serif">
+  <title>Two designs on one clock. Searching first delivers a single answer at
+  about ninety seconds. Answering twice delivers one at zero and a second at
+  ninety. The attention window closes at about ten seconds.</title>
+
+  <!-- Every element carries presentation attributes that already render this
+       legibly with no stylesheet at all: currentColor picks up the page's text
+       colour in either theme, and CSS outranks presentation attributes, so the
+       fig-* classes still upgrade it to the accent tokens when style.css is
+       there. Without them a stale cache renders black-on-black.
+
+       Labels are uppercased in the file, not by text-transform: Safari does not
+       apply text-transform to SVG <text>. -->
+
+  <!-- the attention window: t=0 to t=10s, shared by both lanes. The band marks
+       it; the edge is ticked only at the clock, where no label can collide. -->
+  <rect class="fig-window" x="14" y="28" width="60" height="184" rx="2"
+        fill="currentColor" fill-opacity=".055"/>
+  <line class="fig-edge" x1="74" y1="222" x2="74" y2="238"
+        stroke="currentColor" stroke-opacity=".4" stroke-width="1.5" stroke-dasharray="3 4"/>
+
+  <!-- lane one: search first -->
+  <text class="fig-lane" x="14" y="14" font-size="12" font-weight="700" letter-spacing="1.8" font-family="sans-serif">SEARCH FIRST</text>
+  <line class="fig-track" x1="14" y1="62" x2="590" y2="62" stroke="currentColor" stroke-opacity=".18" stroke-width="2"/>
+  <circle class="fig-dot" cx="554" cy="62" r="5.5" fill="currentColor"/>
+  <text class="fig-node" x="544" y="48" text-anchor="end" font-size="14.5" font-weight="600">Answer</text>
+  <text class="fig-note" x="544" y="84" text-anchor="end" font-size="12.5" fill-opacity=".62">right, and ninety seconds late</text>
+
+  <!-- lane two: answer twice -->
+  <text class="fig-lane" x="14" y="132" font-size="12" font-weight="700" letter-spacing="1.8" font-family="sans-serif">ANSWER TWICE</text>
+  <line class="fig-track" x1="14" y1="180" x2="590" y2="180" stroke="currentColor" stroke-opacity=".18" stroke-width="2"/>
+  <circle class="fig-dot" cx="14" cy="180" r="5.5" fill="currentColor"/>
+  <text class="fig-node" x="26" y="166" font-size="14.5" font-weight="600">First answer</text>
+  <text class="fig-note" x="26" y="202" font-size="12.5" fill-opacity=".62">no tool calls, allowed to be wrong</text>
+  <circle class="fig-dot" cx="554" cy="180" r="5.5" fill="currentColor"/>
+  <text class="fig-node" x="544" y="166" text-anchor="end" font-size="14.5" font-weight="600">Second answer</text>
+  <text class="fig-note" x="544" y="202" text-anchor="end" font-size="12.5" fill-opacity=".62">opens by saying what changed</text>
+
+  <!-- clock -->
+  <text class="fig-clock" x="14" y="234" font-size="11" fill-opacity=".5" font-family="monospace">0s</text>
+  <text class="fig-annot" x="84" y="234" font-size="10.5" fill-opacity=".5" letter-spacing="1.3" font-family="sans-serif">THE WINDOW CLOSES</text>
+  <text class="fig-clock" x="554" y="234" text-anchor="middle" font-size="11" fill-opacity=".5" font-family="monospace">~90s</text>
+</svg>

@@ -1,0 +1,20 @@
+---
+layout: default
+---
+<article>
+  <div class="post-head">
+    <span class="meta">{{ page.date | date: "%B %-d, %Y" }}</span>
+    <h1>{{ page.title }}</h1>
+    {%- if page.subtitle %}
+    <p class="dek">{{ page.subtitle }}</p>
+    {%- endif %}
+  </div>
+
+  <div class="post-body">
+    {{ content }}
+  </div>
+</article>
+
+{% include comments.html %}
+
+<a class="back" href="{{ '/' | relative_url }}">← All posts</a>

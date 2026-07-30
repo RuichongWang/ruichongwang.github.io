@@ -1,0 +1,44 @@
+title: Ruichong Wang
+tagline: Notes on building with AI agents
+description: >-
+  Posts about building agents, skills, and the parts of the stack that don't
+  have names yet.
+
+# Built by GitHub Pages from the /docs folder of RuichongWang/ruichongwang.github.io,
+# which is a user site, so it serves at the domain root and baseurl is empty.
+# It would have to become "/REPO" if the site ever moved to a project repo.
+baseurl: ""
+url: "https://ruichongwang.github.io"
+
+github_username: RuichongWang
+bio: >-
+  I build skills for Claude Code and write about the parts of the agent stack
+  that don't have names yet.
+
+# Comments, via giscus (GitHub Discussions). See docs/COMMENTS.md for setup.
+# Nothing renders until enabled is true AND the two ids are filled in.
+comments:
+  enabled: false
+  repo: "RuichongWang/ruichongwang.github.io"
+  repo_id: ""
+  category: "Comments"
+  category_id: ""
+
+markdown: kramdown
+kramdown:
+  input: GFM
+  syntax_highlighter: rouge
+permalink: /:title/
+
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+
+feed:
+  path: feed.xml
+
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor
+  - COMMENTS.md    # setup notes for me, not a page — was being served at /COMMENTS.md

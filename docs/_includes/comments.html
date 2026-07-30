@@ -1,0 +1,23 @@
+{%- if site.comments.enabled and site.comments.repo_id != "" %}
+<section class="comments">
+  <h2 class="section-label">Comments</h2>
+  <script src="https://giscus.app/client.js"
+          data-repo="{{ site.comments.repo }}"
+          data-repo-id="{{ site.comments.repo_id }}"
+          data-category="{{ site.comments.category }}"
+          data-category-id="{{ site.comments.category_id }}"
+          data-mapping="pathname"
+          data-strict="1"
+          data-reactions-enabled="1"
+          data-emit-metadata="0"
+          data-input-position="top"
+          data-theme="preferred_color_scheme"
+          data-lang="en"
+          data-loading="lazy"
+          crossorigin="anonymous"
+          async>
+  </script>
+  <noscript>Comments need JavaScript. They live in
+    <a href="https://github.com/{{ site.comments.repo }}/discussions">GitHub Discussions</a>.</noscript>
+</section>
+{%- endif %}

@@ -1,0 +1,18 @@
+name: validate
+
+on:
+  push:
+    branches: ["**"]
+  pull_request:
+
+jobs:
+  skills:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Validate skill frontmatter
+        run: ./validate.sh
+      - name: Shell syntax check
+        run: bash -n install.sh adopt.sh validate.sh
+      - name: Install into a scratch dir
+        run: ./install.sh --dir "$RUNNER_TEMP/skills" && ls -l "$RUNNER_TEMP/skills"

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="{{ page.lang | default: 'en' }}">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{{ '/assets/css/style.css' | relative_url }}">
+  {%- feed_meta -%}
+  {%- seo -%}
+</head>
+<body>
+  <div class="wrap">
+    {%- comment -%}
+      One rail on every page, in two sizes: the full masthead on the home page,
+      a compact identity everywhere else. Wide screens lay it out as a sidebar;
+      below 64rem it stacks back above the content.
+    {%- endcomment -%}
+    <aside class="rail{% unless page.masthead %} rail--compact{% endunless %}">
+      {%- if page.masthead %}
+      <p class="eyebrow">{{ site.tagline }}</p>
+      <h1 class="rail-name">{{ site.title }}</h1>
+      <p class="bio">{{ site.bio }}</p>
+      {%- else %}
+      <a class="rail-name" href="{{ '/' | relative_url }}">{{ site.title }}</a>
+      <p class="rail-tag">{{ site.tagline }}</p>
+      {%- endif %}
+      <nav class="rail-links">
+        <a href="{{ '/colophon/' | relative_url }}">Colophon</a>
+        <a href="https://github.com/{{ site.github_username }}">GitHub</a>
+        <a href="{{ '/feed.xml' | relative_url }}">RSS</a>
+      </nav>
+    </aside>
+
+    <div class="col">
+      {{ content }}
+
+      <footer class="site-foot">
+        <span class="foot-note">{{ site.title }}</span>
+      </footer>
+    </div>
+  </div>
+</body>
+</html>

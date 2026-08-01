@@ -48,7 +48,8 @@ done
 # A rule nobody checks decays into a rule nobody follows, so the ones that can
 # be mechanically checked are checked here rather than only written down.
 # Several of the repo's rules can't be — "reuse before building", "search
-# before inventing" — and pretending otherwise would be worse than saying so.
+# before inventing", "state the falsifier", "new evidence to reopen" — and
+# pretending otherwise would be worse than saying so.
 
 echo
 echo "patrol"
@@ -133,6 +134,60 @@ done < <(
   grep -vE '^(https?|~)' |
   sort -u
 )
+
+# --- moot conditions on open queue items
+#
+# Every open item names the condition that would make it pointless (queue
+# item 11, borrowed from self-evolve's retire_if). The patrol reports items
+# whose condition now holds — it never closes them, because eco lost a card
+# to auto-evaluation. Predicates are three-valued: exit 0 the condition
+# holds, 1 it doesn't, anything else is "could not check", which is evidence
+# of nothing either way and is deliberately silent.
+
+while IFS=$'\t' read -r status title moot line cmd; do
+  case "$status" in
+    open*|approved*|'in flight'*|spec*) ;;
+    *) continue ;;
+  esac
+  # The approval page shows one line per item. Without a written one it
+  # clips the first paragraph, which lands mid-sentence and reads as a broken
+  # tool — so the summary is the item's job, not the renderer's.
+  [ "$line" = "0" ] &&
+    note "queue item '$title' has no 'Line:' summary for the approval page"
+  if [ "$moot" = "0" ]; then
+    note "queue item '$title' has no 'Moot when:' line"
+    continue
+  fi
+  [ -z "$cmd" ] && continue
+  set +e
+  ( cd "$REPO_ROOT" && timeout 15 bash -c "$cmd" ) >/dev/null 2>&1
+  rc=$?
+  set -e
+  [ "$rc" -eq 0 ] && echo "  moot? '$title' — its moot condition holds; close it or say why not"
+done < <(awk '
+  function emit() { if (title != "") printf "%s\t%s\t%d\t%d\t%s\n", status, title, moot, line, cmd }
+  /^### / { emit(); title = substr($0, 5); status = ""; moot = 0; line = 0; cmd = "" }
+  /^`/ && status == "" && title != "" {
+    s = $0; sub(/^`/, "", s); sub(/`.*/, "", s); status = s }
+  /^Line:/       && title != "" { line = 1 }
+  /^Moot when:/  && title != "" { moot = 1 }
+  /^Moot check:/ && title != "" {
+    c = $0
+    if (match(c, /`[^`]+`/)) { c = substr(c, RSTART + 1, RLENGTH - 2); cmd = c } }
+  END { emit() }
+' "$REPO_ROOT/memory/pending.md")
+
+# --- the queue still parses
+#
+# dashboard.py reads memory/pending.md by format. Nothing warns when an item is
+# written in a shape it can't read — the page just quietly renders one fewer
+# item, which is the one failure a queue must never have. --check exits nonzero
+# on any item whose status it cannot find.
+
+if command -v python3 >/dev/null 2>&1; then
+  python3 "$REPO_ROOT/dashboard.py" --check >/dev/null 2>&1 ||
+    note "dashboard.py cannot read some queue items — run ./dashboard.py --check"
+fi
 
 # --- duplicated prose across the docs
 #

@@ -196,8 +196,14 @@ Tier 1; the corpus has three. Near-zero is not zero, and the difference matters
 when the tier's contract is "a violation is a defect."
 
 **Length.** All three drafts are 1,450–1,600 words, and v1 states the target
-explicitly. Every rate above may be an artifact of that constraint. Default to
-that range; outside it, treat the whole table as unvalidated.
+explicitly. Every rate above may be an artifact of that constraint — so the
+further a draft sits from ~1,500 words, the less this table can tell you.
+
+The range is not a rule. The author's ruling, 2026-07-30: "字数范围你可以随便改
+目标导向 … 怎么容易被audience喜欢怎么来 先认清audience是谁哈". Length serves
+the piece's goal — name the audience, size for what they will actually finish.
+The only cost of leaving the range is that the diagnostics above stop being
+evidence, and that cost is fine to pay.
 
 ---
 

@@ -85,7 +85,11 @@ triggers everywhere.
 **Generated drafts are not voice corpus.** voice.md is derived from files in
 `writing/`, and drafts land in the same place. Re-deriving voice from a
 directory containing this skill's own output trains it on itself and quietly
-destroys the only asset here. Put `generated: true` in a draft's frontmatter,
+destroys the only asset here. **The flag never comes off** — it is a fact
+about who wrote the file, not a publishing state, and a generated draft that
+publishes is still not corpus. Publishing is gated separately: `publish.sh`
+holds a generated draft until it carries a `reviewed:` line saying what
+checked it. Put `generated: true` in a draft's frontmatter,
 and never treat a file carrying it as a voice sample — only pieces the user
 actually wrote or edited count.
 
@@ -99,12 +103,15 @@ produced the work — *before* reading the finished files. The finished version 
 the corrected version; everything interesting was edited out of it. Read the
 final artifact last, and only to check accuracy.
 
-**2. Find the claim.** One sentence, arguing one thing. If it takes two, there
-are two posts — say so and pick one.
+**2. Name the audience, then find the claim.** Who the piece is for, in one
+line — it decides length, platform, what needs explaining, and what can be
+assumed. The author's standing instruction: optimize for what that audience
+will actually like, not for a word count. Then the claim: one sentence,
+arguing one thing. If it takes two, there are two posts — say so and pick one.
 
-**3. Draft it.** Long form by default: 1,200–1,800 words, the length the voice
-rules are calibrated at. Structure: the claim, the evidence, the limits, the
-close. Evidence is quoted verbatim, never characterized.
+**3. Draft it.** Size for the audience; 1,200–1,800 words is where the voice
+rules are calibrated, not a requirement. Structure: the claim, the evidence,
+the limits, the close. Evidence is quoted verbatim, never characterized.
 
 Produce a title and a subtitle. Declarative, no question mark. The subtitle is a
 second headline that makes its own argument, not a description.

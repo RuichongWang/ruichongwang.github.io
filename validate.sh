@@ -54,6 +54,29 @@ done
 echo
 echo "patrol"
 
+# This script is itself mirrored to the public repo, where it runs against a
+# different set of files: no CLAUDE.md, no memory/, no sync-public.sh, no
+# dashboard.py. Most of the patrol reads exactly those, and CI over there had
+# been red for two syncs — `sed: can't read .../sync-public.sh` under `set -e`,
+# which stops the run before the skill checks that are the reason validate.sh
+# is published at all.
+#
+# So the workspace checks are gated on the workspace being present, and the
+# skip is announced rather than silent. A patrol that quietly examines less
+# than it appears to is the failure this whole section exists to prevent.
+workspace=0
+[ -f "$REPO_ROOT/sync-public.sh" ] && [ -f "$REPO_ROOT/memory/pending.md" ] &&
+  workspace=1
+
+if [ "$workspace" -eq 0 ]; then
+  echo "  workspace checks skipped — no memory/ or sync-public.sh here."
+  echo "  This is the published mirror; only the skill and blog checks apply."
+fi
+
+# Not indented, deliberately: the block below is ~270 lines and reindenting it
+# would bury a one-line change in a whole-file diff.
+if [ "$workspace" -eq 1 ]; then
+
 # --- single source of truth: no path list duplicated between docs and script
 #
 # 2026-07-30: the first version of this grepped for the literal string
@@ -335,6 +358,8 @@ if command -v python3 >/dev/null 2>&1; then
   python3 "$REPO_ROOT/dashboard.py" --check >/dev/null 2>&1 ||
     note "dashboard.py cannot read some queue items — run ./dashboard.py --check"
 fi
+
+fi   # end of the workspace-only checks
 
 # --- the blog's text still clears WCAG AA
 #

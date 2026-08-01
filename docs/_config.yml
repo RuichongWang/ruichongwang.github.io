@@ -37,6 +37,25 @@ plugins:
 feed:
   path: feed.xml
 
+# The share card every page falls back to when it has none of its own — the
+# home page, the colophon, and any post published before publish.sh could draw
+# one. Without an image, jekyll-seo-tag emits twitter:card=summary and no
+# og:image at all, and a link posted anywhere renders as text on grey.
+#
+# It reads page.image, so this has to arrive as a front matter default rather
+# than a site-level key. Posts override it wholesale; publish.sh writes that.
+# Don't add `twitter: card:` here — seo-tag already switches to
+# summary_large_image on its own as soon as an image exists.
+defaults:
+  - scope:
+      path: ""
+    values:
+      image:
+        path: /assets/og/default.png
+        width: 1200
+        height: 630
+        alt: Ruichong Wang — notes on building with AI agents
+
 exclude:
   - Gemfile
   - Gemfile.lock

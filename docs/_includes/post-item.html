@@ -1,0 +1,16 @@
+{%- comment -%}
+  One entry in a .post-list — date, title, dek. The home page's "Earlier" list
+  and the "Read next" block at the foot of a post are the same object two
+  clicks apart, so they are one piece of markup rather than two that drift.
+
+  Usage:
+
+    {% raw %}{% include post-item.html post=post %}{% endraw %}
+{%- endcomment -%}
+<li>
+  <span class="meta">{{ include.post.date | date: "%b %-d, %Y" }}</span>
+  <h3><a href="{{ include.post.url | relative_url }}">{{ include.post.title }}</a></h3>
+  {%- if include.post.subtitle %}
+  <p class="dek">{{ include.post.subtitle }}</p>
+  {%- endif %}
+</li>

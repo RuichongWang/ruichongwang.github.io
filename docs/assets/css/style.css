@@ -1,11 +1,32 @@
-/* ------------------------------------------------------------------ tokens */
+/* ------------------------------------------------------------------ tokens
+
+   Two palettes, each written once. There used to be four blocks — these two
+   plus :root[data-theme="dark"] and :root[data-theme="light"] for a manual
+   toggle. Nothing has ever set data-theme: no toggle in any layout, no
+   JavaScript anywhere. Half the tokens were unreachable while reading as
+   though the case were handled, so they came out. If a toggle ever arrives it
+   should set color-scheme on :root and these should move to light-dark(), so
+   the values still live in one place.
+
+   --faint is the constrained one: it carries every post date and the footer at
+   11.4px, under the 18.66px large-text threshold, so it needs 4.5:1 — and it
+   was 3.09:1 light and 4.40:1 dark, failing AA in both.
+
+   Each value below clears 4.5:1 against *every* surface token, not just the
+   ones it currently lands on. The worst case is --code-bg, which is lighter
+   than --raised; picking against --raised left faint/code-bg at 4.43:1, which
+   no browser measurement catches because nothing puts faint text in a code
+   block today. Don't re-derive these against one surface — validate.sh checks
+   the whole matrix and will say which pair broke. */
 
 :root {
+  color-scheme: light dark;
+
   --bg:       #fcfcfb;
   --raised:   #f2f5f5;
   --text:     #14181a;
   --muted:    #596265;
-  --faint:    #8a9294;
+  --faint:    #676f71;
   --rule:     #e2e6e6;
   --accent:   #0f5f6c;
   --code-bg:  #eef2f3;
@@ -18,36 +39,12 @@
     --raised:   #161d20;
     --text:     #e7eae9;
     --muted:    #98a1a3;
-    --faint:    #737c7e;
+    --faint:    #7e8789;
     --rule:     #222a2d;
     --accent:   #5ec3d0;
     --code-bg:  #171f22;
     --quote-bg: #141c1f;
   }
-}
-
-:root[data-theme="dark"] {
-  --bg:       #0e1215;
-  --raised:   #161d20;
-  --text:     #e7eae9;
-  --muted:    #98a1a3;
-  --faint:    #737c7e;
-  --rule:     #222a2d;
-  --accent:   #5ec3d0;
-  --code-bg:  #171f22;
-  --quote-bg: #141c1f;
-}
-
-:root[data-theme="light"] {
-  --bg:       #fcfcfb;
-  --raised:   #f2f5f5;
-  --text:     #14181a;
-  --muted:    #596265;
-  --faint:    #8a9294;
-  --rule:     #e2e6e6;
-  --accent:   #0f5f6c;
-  --code-bg:  #eef2f3;
-  --quote-bg: #f2f7f7;
 }
 
 :root {
@@ -137,8 +134,13 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 
 .rail-tag { margin: .35rem 0 0; color: var(--faint); }
 
-.rail-links { display: flex; gap: 1.4rem; margin-top: 1.4rem; }
+/* The padding is the tap target, not decoration: at .72rem these links were
+   19.1px tall, under the 24px WCAG 2.2 SC 2.5.8 minimum, and they are the only
+   navigation on the site. */
+.rail-links { display: flex; gap: 1.4rem; margin-top: 1.1rem; }
 .rail-links a {
+  display: inline-block;
+  padding: .42rem 0;
   font-family: var(--mono);
   font-size: .72rem;
   letter-spacing: .1em;
@@ -162,6 +164,12 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
   letter-spacing: .1em;
   text-transform: uppercase;
   white-space: nowrap;
+  /* Same reason as .rail-links below, and it was missed the first time: this
+     is the only way back to the index from a post, it is display:block rather
+     than a link inside a sentence, and at 11.2px with no padding it measured
+     11.4px tall. The spacing exception in SC 2.5.8 covers inline text in
+     prose; it does not cover a block-level nav target. */
+  padding: .42rem 0;
 }
 .rail--compact .rail-name:hover { color: var(--accent); }
 .rail--compact .rail-tag { display: none; }
@@ -200,9 +208,9 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
   .bio { font-size: .97rem; }
   .rail-links, .rail--compact .rail-links {
     display: block;
-    margin: 1.5rem 0 0;
+    margin: 1.2rem 0 0;
   }
-  .rail-links a { display: block; margin-bottom: .55rem; }
+  .rail-links a { display: block; margin-bottom: 0; }
 
   .col { min-width: 0; padding-top: 3.2rem; }
 }
@@ -236,7 +244,8 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 
 .cta {
   display: inline-block;
-  margin-top: 1.5rem;
+  margin-top: 1.25rem;
+  padding-top: .3rem;
   font-size: .72rem;
   letter-spacing: .11em;
   text-transform: uppercase;
@@ -262,6 +271,11 @@ a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-
 
 .post-list { margin: 0; padding: 0; list-style: none; }
 .post-list li { padding: 1.7rem 0; border-bottom: 1px solid var(--rule); }
+
+/* The rule under the last entry sat 64px above the footer's own rule, which
+   read as a post that had failed to render. The separator belongs between
+   items, not after them. */
+.post-list li:last-child { border-bottom: 0; padding-bottom: .6rem; }
 
 .post-list h3 {
   margin: .4rem 0 0;
@@ -368,9 +382,9 @@ code, pre { font-family: var(--mono); }
 /* ------------------------------------------------------------------ figures
 
    Figures are inlined as SVG (see _includes/figure.html), so the tokens above
-   reach inside them and the manual [data-theme] toggle works. Type inside an
-   SVG scales with the viewBox, so the figure scrolls below --fig-min rather
-   than shrinking its own labels into illegibility. */
+   reach inside them and a figure repaints with the colour scheme. Type inside
+   an SVG scales with the viewBox, so the figure scrolls below its min-width
+   rather than shrinking its own labels into illegibility. */
 
 .post-body .fig {
   margin: 2.4rem 0;
@@ -405,9 +419,19 @@ code, pre { font-family: var(--mono); }
 .fig-window { fill: var(--accent); fill-opacity: .07; }
 .fig-edge   { stroke: var(--accent); stroke-opacity: .55; stroke-width: 1.5; stroke-dasharray: 3 4; }
 
+/* --------------------------------------------------------------- read next
+
+   The one thing at the end of a post used to be "← All posts". Reuses the home
+   page's list styles rather than inventing a second card treatment: it is the
+   same object, in the same site, two clicks apart. */
+
+.read-next { margin-top: 3.6rem; }
+.read-next .section-label { margin-top: 0; }
+
 .back {
   display: inline-block;
-  margin-top: 3rem;
+  margin-top: 2.6rem;
+  padding: .4rem 0;
   font-size: .72rem;
   letter-spacing: .11em;
   text-transform: uppercase;

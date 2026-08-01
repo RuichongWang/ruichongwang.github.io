@@ -2,8 +2,19 @@
 layout: post
 title: "The Skill That Downloads a Domain"
 subtitle: "One command turns your coding agent into a practitioner in a field it has never seen. The most useful thing to show you is the line it gets wrong."
-tags: artificial-intelligence, programming, software-engineering, machine-learning, llm
+description: 'One command turns your coding agent into a practitioner in a field it has never seen. The most useful thing to show you is the line it gets wrong.'
+tags:
+  - artificial-intelligence
+  - programming
+  - software-engineering
+  - machine-learning
+  - llm
 date: 2026-07-30
+image:
+  path: /assets/og/downloads-a-domain.png
+  width: 1200
+  height: 630
+  alt: 'Share card: The Skill That Downloads a Domain'
 ---
 
 There is a skill in my [examples directory](https://github.com/RuichongWang/ruichongwang.github.io/tree/main/examples/matrix) that teaches an agent patent law. It carries a table of statutory deadlines. One row reads:

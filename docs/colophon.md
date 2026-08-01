@@ -1,7 +1,7 @@
 ---
 layout: page
 title: Colophon
-subtitle: What this site is made of, and how the writing actually gets made.
+description: What this site is made of, and how the writing actually gets made.
 ---
 
 ## Who writes this

@@ -27,6 +27,7 @@ allowed-tools:
   - Edit
   - Glob
   - Grep
+  - Task
   - WebSearch
   - WebFetch
   - Bash(git log:*)
@@ -57,12 +58,27 @@ rather than spelunking for a history that isn't there.
 
 ---
 
-## Read the voice file first
+## Think the piece through first
 
-`references/voice.md` is the point of this skill. Everything else is
-scaffolding. Read it before writing a sentence — including its
-"What this file can't tell you" section, which names which rules are reliable
-and which are guesses from a thin sample.
+**The rhetorical problem comes first, and it is per-piece.** What is this piece
+trying to convey, who has to receive it, and what makes it land for them. That
+reasoning decides structure, length, where to cut in, and what needs explaining
+— and no corpus can supply it, because it belongs to this subject and this
+reader. Research serves them: what the audience already believes, what they'll
+disbelieve without evidence, where the interesting turn is.
+
+**Don't research how to write a post.** Writing-advice consensus — use
+subheadings, use bullet lists, use transition words — is the exact register
+Tier 1 of `references/voice.md` exists to exclude. Reading it in pulls the prose
+toward the median, which reads *more* like generic AI, not less.
+
+**`references/voice.md` is the sentence-level constraint, not the starting
+point.** Read it before writing a sentence, and again in check mode. It holds
+the part the web can't teach — no lists, no `however`, a short verdict after an
+exhibit, the thesis bolded once — worth having precisely because it runs against
+consensus. It cannot tell you what the piece is about or why anyone should read
+it. Read its "What this file can't tell you" section too, which names which
+rules are reliable and which are guesses from a thin sample.
 
 **Never claim voice fidelity you can't back.** Outside what voice.md has
 evidence for, say so in one line and write plainly.
@@ -71,7 +87,9 @@ evidence for, say so in one line and write plainly.
 English long form. Applied to 小红书 / 即刻 / 公众号 / 知乎 they produce
 translation-ese and the author will hear it immediately. Write plain idiomatic
 Chinese, say the voice file doesn't cover it, and offer to build a Chinese
-sample set.
+sample set. **Thinking the piece through does not close this gap** — it settles
+what to say and to whom, never how a sentence should sound in a language the
+corpus never covered.
 
 ---
 
@@ -85,13 +103,15 @@ triggers everywhere.
 **Generated drafts are not voice corpus.** voice.md is derived from files in
 `writing/`, and drafts land in the same place. Re-deriving voice from a
 directory containing this skill's own output trains it on itself and quietly
-destroys the only asset here. **The flag never comes off** — it is a fact
-about who wrote the file, not a publishing state, and a generated draft that
-publishes is still not corpus. Publishing is gated separately: `publish.sh`
-holds a generated draft until it carries a `reviewed:` line saying what
-checked it. Put `generated: true` in a draft's frontmatter,
-and never treat a file carrying it as a voice sample — only pieces the user
-actually wrote or edited count.
+destroys the only asset here. So put `generated: true` in the frontmatter of
+anything you wrote, and never treat a file carrying it as a voice sample —
+only pieces the user actually wrote or edited count.
+
+**The flag never comes off.** It records who wrote the file, not what state
+it is in, so a generated draft that publishes is still not corpus. Publishing
+is gated separately: `publish.sh` holds a generated draft until it carries a
+`reviewed:` line naming what checked it. What satisfies that line is a real
+review — see "Before it publishes" below — not a line written to clear a hold.
 
 ---
 
@@ -103,34 +123,72 @@ produced the work — *before* reading the finished files. The finished version 
 the corrected version; everything interesting was edited out of it. Read the
 final artifact last, and only to check accuracy.
 
-**2. Name the audience, then find the claim.** Who the piece is for, in one
-line — it decides length, platform, what needs explaining, and what can be
-assumed. The author's standing instruction: optimize for what that audience
-will actually like, not for a word count. Then the claim: one sentence,
-arguing one thing. If it takes two, there are two posts — say so and pick one.
+**2. Think the piece through.** This is the step that decides the piece. Write
+three lines before drafting a sentence, and search where you can't answer from
+the material:
 
-**3. Draft it.** Size for the audience; 1,200–1,800 words is where the voice
-rules are calibrated, not a requirement. Structure: the claim, the evidence,
-the limits, the close. Evidence is quoted verbatim, never characterized.
+**Reader.** Who has to receive this, and what do they already believe? It
+decides length, platform, what needs explaining, and what can be assumed. The
+author's standing instruction: optimize for what that audience will actually
+like, not for a word count.
+
+**Claim.** One sentence, arguing one thing. If it takes two, there are two
+posts — say so and pick one.
+
+**Landing.** What makes this reader accept the claim — the turn they don't
+expect, the number they can check, the objection they raise first. Research
+here is about the subject and the audience, never about how to write a post.
+
+**3. For a piece that will be published, stop here and ask.** Send the three
+lines as a question — reader, claim, landing, plus the one reading you
+considered and rejected — and wait for an answer before writing a sentence.
+This is the cheapest point at which the piece can be pointed somewhere else.
+
+**The rule here used to be the opposite, and the reversal is deliberate.** It
+read: *"Lead your reply with step 2 — reader, claim, landing — then give the
+draft. Don't stop for approval; a wrong reading costs one message to reject, a
+blocked draft costs a round trip."* That arithmetic was right while the author
+read every draft: a wrong reading died on his desk. He no longer reads them —
+a fact-check subagent stands in, and it checks whether the piece is *true*,
+not whether it is the piece worth writing. So a wrong reader or a wrong claim
+now survives all the way to publication. A future session that notices a round
+trip to be saved here is looking at the last human check in the pipeline. Do
+not restore the old rule as an efficiency.
+
+**Where the line is.** The gate belongs to a piece going out under the
+author's name and shipping without another human read — a blog post, a thread,
+a cross-post. It does not belong to a draft asked for as a thinking aid, a
+piece the requester will edit themselves, or a writeup in someone else's repo
+that a human reviews before it ships. This skill is installed globally and
+triggers in repos that have nothing to do with the blog; those are not covered
+by default. When it isn't obvious which kind you have, put that question in
+the same message as the three lines — it costs the same one message.
+
+**4. Draft it.** Size for the audience; 1,200–1,800 words is where the voice
+rules are calibrated, not a requirement. Structure follows from step 2, not from
+a template — claim, evidence, limits, close is the corpus default and the
+default is overridable when the reader and the landing want otherwise. Evidence
+is quoted verbatim, never characterized.
 
 Produce a title and a subtitle. Declarative, no question mark. The subtitle is a
 second headline that makes its own argument, not a description.
 
-**4. Decide what the reader sees.** Read `references/visuals.md`. Two questions,
+**5. Decide what the reader sees.** Read `references/visuals.md`. Two questions,
 and usually both answers are no: is any of this evidence two-dimensional
 (a table), and is any claim about sequence or timing (a figure)? Zero is a valid
 answer and the corpus default — never add one to break up the page.
 
-**5. Link the claims.** Search out a source for load-bearing factual claims and
+**6. Link the claims.** Search out a source for load-bearing factual claims and
 link them inline. This is a documented property of the author's finished drafts
 — the revision in the corpus went from 1 link to 12 — and it is the step most
 easily skipped.
 
-**Lead your reply with the claim, then give the draft.** Don't stop for approval
-— a wrong claim costs one message to reject, a blocked draft costs a round trip.
-
-**6. Run check mode on your own draft** before showing it. Fix what you find;
+**7. Run check mode on your own draft** before showing it. Fix what you find;
 don't report it.
+
+Where step 3 did not apply, still lead the reply with the three lines from step
+2 before the draft itself — a reader who can see the reading you worked from
+can reject it in one message.
 
 ---
 
@@ -180,7 +238,10 @@ absence is never a finding at all.
 
 **Branch on the format.** The rubric above is for long form. On an adapted short
 piece, a missing limits *section* is correct — `platforms.md` puts it in the
-Dies column — and only the absence of any qualifying clause is a defect.
+Dies column — and only the absence of any qualifying clause is a defect. The
+voice rules split the same way: several Tier 1 rules are typographic conventions
+of long form and are void where the platform has no headings. `voice.md`'s
+"Off long form" section says which, and names what it can't replace them with.
 
 Report only what's actually wrong. A check that always finds ten things is a
 check nobody runs twice.
@@ -190,6 +251,7 @@ check nobody runs twice.
 ## Before showing any draft
 
 - [ ] One claim, stated in one sentence, arguable
+- [ ] Reader and landing named before drafting, and the structure follows them
 - [ ] No paragraph could have been written from the finished repo alone
 - [ ] Evidence quoted verbatim, with real numbers
 - [ ] Load-bearing factual claims linked
@@ -200,6 +262,28 @@ check nobody runs twice.
 - [ ] The opening could not open a post about a different project
 - [ ] Title and subtitle present, declarative
 - [ ] Ran check mode against `voice.md`
+- [ ] If step 3 applied: reader, claim and landing confirmed before drafting
+
+---
+
+## Before it publishes — the review
+
+A piece that publishes gets a fact-check review first, run by a subagent that
+did not write it. `references/review.md` is the brief; hand it over whole
+rather than summarizing it, and name the draft and the repo it is about.
+
+**This is not an improvement on the process — it is the process.** It occupies
+the slot the author's read used to, so a miss here is a post published wrong
+with nobody left to catch it. That is why the brief makes the review state
+what it *could not* check alongside what it did, and why "could not check"
+never quietly becomes a pass.
+
+Findings arrive as a draft, not a verdict to act on. Check each one against
+the source yourself before changing a line — a review of this skill's own
+output once reported a fabrication that a truncated search had invented. Then
+record the outcome in the `reviewed:` line that gates publishing, above: what
+ran, what it checked, what it found. Fixing a defect the review found does not
+retire the review; the record is of what was checked, not of what survived.
 
 ---
 
@@ -207,7 +291,8 @@ check nobody runs twice.
 
 | File | Contents |
 |------|----------|
-| `references/voice.md` | The author's voice as tiered, checkable rules — with evidence and known gaps |
+| `references/voice.md` | The sentence-level voice constraint as tiered, checkable rules — with evidence and known gaps |
 | `references/material.md` | How to find the story in the history instead of the artifact |
 | `references/platforms.md` | Per-platform structure, and what survives compression |
 | `references/visuals.md` | When a table or a figure is evidence rather than decoration, and how to build one |
+| `references/review.md` | The fact-check brief handed to the review subagent before a piece publishes |

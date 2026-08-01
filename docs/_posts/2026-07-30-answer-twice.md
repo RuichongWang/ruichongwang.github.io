@@ -2,8 +2,19 @@
 layout: post
 title: "A Correct Answer, Ninety Seconds Late"
 subtitle: "I built a travel-scam assistant that searched the web before it answered. Standing next to a driver who just changed the price, that is the same as not answering."
-tags: artificial-intelligence, programming, software-engineering, design, llm
+description: 'I built a travel-scam assistant that searched the web before it answered. Standing next to a driver who just changed the price, that is the same as not answering.'
+tags:
+  - artificial-intelligence
+  - programming
+  - software-engineering
+  - design
+  - llm
 date: 2026-07-30
+image:
+  path: /assets/og/answer-twice.png
+  width: 1200
+  height: 630
+  alt: 'Share card: A Correct Answer, Ninety Seconds Late'
 ---
 
 Someone is standing next to a taxi. The driver has just announced that the

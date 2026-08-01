@@ -15,6 +15,22 @@ layout: default
   </div>
 </article>
 
+{%- comment -%}
+  Something to read next. page.previous is the older post and page.next the
+  newer one; both are built into Jekyll, so this costs nothing and needs no
+  plugin. Older first, because a reader who just finished the newest post is
+  looking backwards. Renders nothing at all when this is the only post.
+{%- endcomment -%}
+{%- if page.previous or page.next %}
+<nav class="read-next" aria-labelledby="read-next-label">
+  <h2 class="section-label" id="read-next-label">Read next</h2>
+  <ul class="post-list">
+    {%- if page.previous %}{% include post-item.html post=page.previous %}{% endif %}
+    {%- if page.next %}{% include post-item.html post=page.next %}{% endif %}
+  </ul>
+</nav>
+{%- endif %}
+
 {% include comments.html %}
 
 <a class="back" href="{{ '/' | relative_url }}">← All posts</a>

@@ -1,5 +1,17 @@
 # Voice
 
+**This file is the sentence-level constraint, not the starting point.** It says
+how the prose should sound once you know what the piece is for. It does not say
+what to write, who for, or what makes it land — that reasoning is per-piece,
+belongs to the subject and the reader, and happens before this file is opened
+(`skills/writeup/SKILL.md`, "Think the piece through first"). Reach for this
+while writing a sentence and in check mode, not while deciding what the piece is.
+
+What it holds is the part the web can't supply: rules worth having precisely
+because they cut against writing-advice consensus — no lists, no `however`, a
+short verdict after an exhibit, the thesis bolded once. Anything generic advice
+would also tell you is not evidence about this author.
+
 Derived from three drafts of one post: `writing/matrix-v0.md`,
 `matrix-v1.md`, `matrix-v3.md`.
 
@@ -38,7 +50,10 @@ about it. Fix an off reading by rewriting the argument, or leave it off.
 
 ## Tier 1 — structural invariants
 
-Binary, verified true in all three drafts. A violation is a defect.
+Binary, verified true in all three drafts. A violation is a defect. All three
+drafts are long-form Markdown posts, so some of these are conventions of that
+format rather than of the author — read "Off long form" below before applying
+them to a thread or a 小红书 note.
 
 **1.1 No bullet lists. No numbered lists. No H3 or deeper. No exclamation
 marks.** Confirmed zero across all three drafts (the only `!` characters in the
@@ -148,6 +163,36 @@ with a bare `The`. They assert a claim ("The Problem Everyone Misframes") or
 name an object ("The Limits") — never a section function. No "Overview",
 "Background", "Getting Started", "Conclusion", "Key Takeaways". Numerals are
 absent from the corpus but never tested; a numeral in a heading is not a defect.
+
+---
+
+## Off long form — which of these are typography
+
+Every draft in the corpus is a long-form Markdown post. Some rules above are
+conventions of that format, and a surface with no headings, no horizontal rules
+and no fenced code cannot break them.
+
+**Void where the format has no sections:** 1.2 (a rule between every section),
+1.3 (H1, italic dek, rule) and 2.12 (heading style) all presuppose sections, and
+1.1's "no H3 or deeper" is the same clause wearing a different hat. 1.4 (italic
+blockquote exhibits) and 1.5 (a bare fenced command) presuppose the markup; the
+device underneath survives — real output shown verbatim, never paraphrased, with
+prose reacting to it — but how output gets shown where there are no code blocks
+is `platforms.md`'s question, not this file's.
+
+**Portable, because they are about sentences:** 1.6, 1.7, 1.8, and all of Tier 2
+except 2.12. Nothing about a shorter format makes *however* sound like him.
+
+**Untested rather than void: 1.1's ban on bullet lists.** It isn't typographic,
+and it is the corpus's most characteristic feature — but the corpus contains no
+piece written where lists are the platform norm, as they are on LinkedIn and in
+much of 小红书. Keep it and say you kept it on untested grounds. Don't drop it
+quietly because the platform likes lists.
+
+**No positive rules exist for those surfaces.** This file cannot say what a
+thread or a 小红书 note sounds like in his voice, because there are no samples
+of either — the same hole as the Chinese one, one format wider. Naming it is all
+it can honestly do; see "What this file can't tell you".
 
 ---
 

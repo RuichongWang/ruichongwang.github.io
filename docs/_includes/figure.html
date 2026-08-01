@@ -1,7 +1,8 @@
 {%- comment -%}
   Inline an SVG figure from _includes/figures/ so the site's CSS custom
-  properties reach inside it. An <img> would not: the theme has a manual
-  [data-theme] override, and a referenced SVG can only see prefers-color-scheme.
+  properties reach inside it. An <img> would not: a referenced SVG is a
+  separate document and var(--accent) does not cross that boundary, so the
+  figure would have to carry its own copy of the palette.
 
   Usage, from a draft in writing/ or a post in _posts/:
 

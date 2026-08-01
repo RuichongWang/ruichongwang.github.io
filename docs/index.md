@@ -25,13 +25,7 @@ masthead: true
 <h2 class="section-label">Earlier</h2>
 <ul class="post-list">
 {%- for post in site.posts offset: 1 %}
-  <li>
-    <span class="meta">{{ post.date | date: "%b %-d, %Y" }}</span>
-    <h3><a href="{{ post.url | relative_url }}">{{ post.title }}</a></h3>
-    {%- if post.subtitle %}
-    <p class="dek">{{ post.subtitle }}</p>
-    {%- endif %}
-  </li>
+  {%- include post-item.html post=post %}
 {%- endfor %}
 </ul>
 {%- endif %}

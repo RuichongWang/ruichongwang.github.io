@@ -1,0 +1,36 @@
+<!doctype html>
+<meta charset="utf-8">
+<!--
+  The favicon mark: the site's accent, full bleed, with an R in the site's
+  serif. publish.sh screenshots this at 32x32 for the browser tab and at
+  180x180 for the Apple touch icon, substituting __PX__ with the size it wants.
+
+  Every length is in px against __PX__ rather than in vh, because the page is
+  rendered into a deliberately oversized window (see _og/crop.py) and viewport
+  units would measure that window instead of the icon.
+
+  Full bleed and opaque on purpose: iOS masks and rounds the touch icon itself,
+  and a transparent one comes out black.
+-->
+<style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: __PX__px; height: __PX__px;
+    background: #0f5f6c;
+    color: #fcfcfb;
+    font-family: ui-serif, Charter, "Bitstream Charter", Georgia, serif;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+  }
+  /* Cap height, not the em box, is what should sit centred in the square, so
+     the glyph is nudged up by the descender space it does not use. */
+  span {
+    font-size: calc(__PX__px * .78);
+    line-height: 1;
+    margin-top: calc(__PX__px * -.06);
+  }
+</style>
+<body><span>R</span>

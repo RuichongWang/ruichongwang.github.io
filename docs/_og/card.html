@@ -1,0 +1,81 @@
+<!doctype html>
+<meta charset="utf-8">
+<!--
+  Template for the 1200x630 share card that ends up as og:image.
+
+  publish.sh substitutes the __TOKENS__ below, screenshots this with a headless
+  Chromium into a deliberately oversized window, and crops the result back with
+  _og/crop.py — see the comment there for why the oversizing is necessary. The
+  PNG lands in docs/assets/og/. Nothing here is served: Jekyll skips source
+  entries whose name starts with an underscore, so /_og/ does not exist on the
+  built site.
+
+  The colours and the type stack are copied from assets/css/style.css on
+  purpose: this is the same design, rasterised, so a link preview looks like the
+  page it opens. If a token changes there, change it here — they are two media,
+  not two copies of one file, and nothing can keep them in step for us.
+
+  The left accent bar is the .lead treatment from the home page. Weight is 700
+  rather than the site's 600 because Charter ships Regular and Bold and nothing
+  between, and 600 gets synthesised into mush at 62px.
+-->
+<style>
+  html, body { margin: 0; padding: 0; }
+  body {
+    width: 1200px; height: 630px;
+    box-sizing: border-box;
+    background: #fcfcfb;
+    border-left: 14px solid #0f5f6c;
+    color: #14181a;
+    font-family: ui-serif, Charter, "Bitstream Charter", Georgia, serif;
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 74px 86px 62px 82px;
+    overflow: hidden;
+  }
+  .mono {
+    font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+                 "DejaVu Sans Mono", monospace;
+    text-transform: uppercase;
+  }
+  .eyebrow { margin: 0; font-size: 21px; letter-spacing: .17em; color: #0f5f6c; }
+  h1 {
+    margin: 0;
+    font-weight: 700;
+    letter-spacing: -.022em;
+    line-height: 1.09;
+    text-wrap: balance;
+  }
+  .t-l h1 { font-size: 76px; }
+  .t-m h1 { font-size: 62px; }
+  .t-s h1 { font-size: 50px; }
+  .dek {
+    margin: 26px 0 0;
+    font-size: 27px;
+    line-height: 1.44;
+    font-style: italic;
+    color: #596265;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+  .foot { display: flex; align-items: baseline; gap: 20px; }
+  /* the .post-body hr motif: a short thick accent rule */
+  .foot::before {
+    content: ""; display: block; align-self: center;
+    width: 44px; height: 3px; background: #0f5f6c; opacity: .5;
+  }
+  .foot span { font-size: 18px; letter-spacing: .1em; color: #697173; }
+  .foot .right { margin-left: auto; }
+</style>
+<body class="__SIZE__">
+  <p class="eyebrow mono">__EYEBROW__</p>
+  <div>
+    <h1>__TITLE__</h1>
+    <p class="dek">__DEK__</p>
+  </div>
+  <div class="foot">
+    <span class="mono">ruichongwang.github.io</span>
+    <span class="mono right">__FOOT__</span>
+  </div>
+</body>

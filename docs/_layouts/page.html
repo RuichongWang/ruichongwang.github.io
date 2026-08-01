@@ -2,10 +2,18 @@
 layout: default
 ---
 <article>
+  {%- comment -%}
+    A standalone page writes its dek as `description:`, not `subtitle:`, so the
+    one line does both jobs: jekyll-seo-tag reads page.description for the
+    share card and the search snippet, and it is rendered here. A page with
+    only a subtitle gets a dek but a generic snippet, which is the bug this
+    fallback exists to make visible rather than silent.
+  {%- endcomment -%}
   <div class="post-head">
     <h1>{{ page.title }}</h1>
-    {%- if page.subtitle %}
-    <p class="dek">{{ page.subtitle }}</p>
+    {%- assign dek = page.description | default: page.subtitle %}
+    {%- if dek %}
+    <p class="dek">{{ dek }}</p>
     {%- endif %}
   </div>
 
